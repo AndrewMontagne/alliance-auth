@@ -1,17 +1,12 @@
 body {
-    background-image: url('/img/background.jpg');
-    background-size: cover;
-    -webkit-background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
+    background: url('/img/background.jpg') no-repeat center center fixed;
 }
 .bold {
     font-weight: bold;
 }
 #login-box-container {
     width: 300px !important;
-    height: 430px !important;
+    height: 440px !important;
     position: fixed;
     left: 50%;
     top: 50%;
@@ -24,4 +19,35 @@ body {
     position: relative;
     left: -50%;
     top: -50%;
+    box-shadow: rgba(0,0,0,0.5) 0px 10px 25px;
+    -webkit-box-shadow: rgba(0,0,0,0.75) 0px 10px 25px
+}
+
+#login-prompt {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+}
+
+.error-prompt {
+    background-color: rgb(200,0,0);
+    color: white;
+    font-weight: bold;
+}
+
+.bottom, .left, .right, .top{
+    position: absolute;
+}
+
+.left {
+    left: 15px;
+}
+.top {
+    top: 15px;
+}
+.right {
+    right: 15px;
+}
+.bottom {
+    bottom: 15px;
 }

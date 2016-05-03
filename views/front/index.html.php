@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AUTH DUDE</title>
     <link href="/css/front/login.css" rel="stylesheet" type="text/css" />
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="/css/bootstrap-flat.min.css" rel="stylesheet" type="text/css" />
     <link href="/css/bootstrap-flat-extras.min.css" rel="stylesheet" type="text/css" />
     <script src="/js/jquery-2.2.3.min.js"></script>
@@ -15,31 +15,25 @@
 <body>
     <div id="login-box-container">
         <div id="login-box" class="container" role="main">
-            <img style="margin-top: 20px;" src="https://image.eveonline.com/Alliance/99005866_128.png">
+            <img style="margin-top: 20px;" src="https://image.eveonline.com/Alliance/<?=ALLIANCE_ID?>_128.png">
             <div class="caption">
-                <h3 class="bold">Just Let It Happen</h3>
-                <hr/>
+                <h3 class="bold"><?=ALLIANCE_NAME?></h3>
                 <form onsubmit="alert('submitted!'); return false;" action="/login">
+                    <div id="login-prompt">Please enter your login credentials:</div>
                     <p>
                         <input type="email" class="form-control" placeholder="Email Address" required>
                     </p>
                     <p>
-                    <div class="input-group">
                         <input type="password" class="form-control" placeholder="Password" required>
-                        <span class="input-group-btn">
-                            <submit class="btn btn-primary btn-default" type="button">LOG IN</submit>
-                        </span>
-                    </div>
                     </p>
                     <p>
-                        <button type="button" class="btn btn-default btn-sm">Register Account</button>
-                        <button type="button" class="btn btn-default btn-sm">Password Recovery</button>
+                        <button type="button" class="btn btn-primary btn-lg btn-block">AUTHENTICATE</button>
+                    </p>
+                    <p>
+                        <button type="button" class="btn btn-default btn-sm bottom left">Register Account</button>
+                        <button type="button" class="btn btn-default btn-sm bottom right">Password Recovery</button>
                     </p>
                 </form>
-                <hr/>
-                <div class="centered" style="color: lightgray; font-size: small; margin-bottom: 16px">
-                    &copy; <?=date("Y")?> Just Let It Happen
-                </div>
             </div>
         </div>
     </div>
