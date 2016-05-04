@@ -13,6 +13,12 @@ foreach ($config as $key => $value) {
     define(strtoupper($key), $value);
 }
 
+function getVersionedAsset($asset) {
+    $path = ROOT_DIR . '/static/' . $asset;
+    $assetHash = substr(md5_file($path, false), 0, 8);
+    return '/' . $asset . '?' . $assetHash;
+}
+
 Flight::set('flight.views.path', ROOT_DIR . 'views');
 Flight::route('/', ['\\FUM8\Auth\Front\Index', 'indexAction']);
 Flight::start();
