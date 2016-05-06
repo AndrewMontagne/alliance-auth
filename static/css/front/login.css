@@ -17,8 +17,8 @@ body {
     height: 100%;
     text-align: center;
     position: relative;
-    left: -50%;
-    top: -66%;
+    left: -150px;
+    top: -50%;
     box-shadow: rgba(0,0,0,0.5) 0px 10px 25px;
     -webkit-box-shadow: rgba(0,0,0,0.75) 0px 10px 25px
 }
@@ -27,6 +27,12 @@ body {
     width: 100%;
     margin-bottom: 10px;
     padding: 8px;
+}
+
+.success-prompt {
+    background-color: rgb(0,180,0);
+    color: white;
+    font-weight: bold;
 }
 
 .error-prompt {

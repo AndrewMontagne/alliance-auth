@@ -20,5 +20,6 @@ function getVersionedAsset($asset) {
 }
 
 Flight::set('flight.views.path', ROOT_DIR . 'views');
-Flight::route('/', ['\\FUM8\Auth\Front\Index', 'indexAction']);
+Flight::route('GET /login', ['\\FUM8\Auth\Front\Index', 'loginAction']);
+Flight::route('POST /login', ['\\FUM8\Auth\Front\Json', 'loginCallbackAction']);
 Flight::start();

@@ -9,13 +9,9 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="<?=getVersionedAsset('css/bootstrap-flat.min.css');?>" rel="stylesheet" type="text/css" />
     <link href="<?=getVersionedAsset('css/bootstrap-flat-extras.min.css');?>" rel="stylesheet" type="text/css" />
-    <script src="<?=getVersionedAsset('js/jquery-2.2.3.min.js');?>"></script>
+    <script src="<?=getVersionedAsset('js/jquery-1.12.3.min.js');?>"></script>
     <script src="<?=getVersionedAsset('js/bootstrap.min.js');?>"></script>
-    <script type="text/javascript">
-        function handleLogin() {
-            return false;
-        }
-    </script>
+    <script src="<?=getVersionedAsset('js/login.js');?>"></script>
 </head>
 <body>
     <div id="login-box-container">
@@ -23,13 +19,13 @@
             <img style="margin-top: 20px;" src="https://image.eveonline.com/Alliance/<?=ALLIANCE_ID?>_128.png">
             <div class="caption">
                 <h3 id="alliance-name" class="bold"><?=ALLIANCE_NAME?></h3>
-                <form onsubmit="return handleLogin(this);" action="/login">
+                <form action="/login" onsubmit="return handleLogin(this);">
                     <div id="login-prompt">Please enter your login credentials:</div>
                     <p>
-                        <input type="text" class="form-control" placeholder="Username">
+                        <input id="form-username" type="text" class="form-control" placeholder="Username">
                     </p>
                     <p>
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input id="form-password" type="password" class="form-control" placeholder="Password">
                     </p>
                     <p>
                         <button id="login-button" type="submit" class="btn btn-primary btn-lg btn-block">AUTHENTICATE</button>

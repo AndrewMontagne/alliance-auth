@@ -7,7 +7,7 @@ namespace FUM8\Auth\Front;
 
 class Index
 {
-    public static function indexAction()
+    public static function loginAction()
     {
         $content = 'LEL';
         \Flight::render('front/index.html', ['body_content' => $content]);
