@@ -7,7 +7,14 @@ define('ROOT_DIR', $_SERVER['DOCUMENT_ROOT']);
 
 require ROOT_DIR . 'vendor/autoload.php';
 
-$config = json_decode(file_get_contents(ROOT_DIR . 'config.json'), true);
+$configPath = ROOT_DIR . $_SERVER['HTTP_HOST'] . '.config.json';
+
+if(!file_exists($configPath)) {
+    echo '<h1>CONFIGURATION ERROR</h1><p>Missing configuration for ' . $_SERVER['HTTP_HOST'] . '</p>';
+    die();
+}
+
+$config = json_decode(file_get_contents($configPath), true);
 
 foreach ($config as $key => $value) {
     define(strtoupper($key), $value);
@@ -19,7 +26,20 @@ function getVersionedAsset($asset) {
     return '/' . $asset . '?' . $assetHash;
 }
 
+ORM::configure(ORM_CONNECTION);
+ORM::configure('username', ORM_USERNAME);
+ORM::configure('password', ORM_PASSWORD);
+
 Flight::set('flight.views.path', ROOT_DIR . 'views');
 Flight::route('GET /login', ['\\FUM8\Auth\Front\Index', 'loginAction']);
 Flight::route('POST /login', ['\\FUM8\Auth\Front\Json', 'loginCallbackAction']);
+Flight::route('GET /genuser', function() {
+    $user = Model::factory('\FUM8\Auth\Model\User')->create();
+    $user
+        ->generateID()
+        ->setUsername('admin')
+        ->setEmail('andrew@montagne.uk')
+        ->setPassword('password')
+        ->save();
+});
 Flight::start();
