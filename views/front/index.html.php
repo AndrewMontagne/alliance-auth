@@ -16,7 +16,7 @@
 <body>
     <div id="login-box-container">
         <div id="login-box" class="container" role="main">
-            <img style="margin-top: 20px;" src="https://image.eveonline.com/Alliance/<?=ALLIANCE_ID?>_128.png">
+            <img id="alliance-logo" src="https://image.eveonline.com/Alliance/<?=ALLIANCE_ID?>_128.png">
             <div class="caption">
                 <h3 id="alliance-name" class="bold"><?=ALLIANCE_NAME?></h3>
                 <form action="/login" onsubmit="return handleLogin(this);">

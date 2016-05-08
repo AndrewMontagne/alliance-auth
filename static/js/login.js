@@ -3,11 +3,11 @@ function handleLogin() {
     var password = $('#form-password').val();
 
     if(username.length < 1) {
-        showErrorMessage("Please Enter Your Username:");
+        showErrorMessage("Please Enter Your Username");
         return false;
     }
     if(password.length < 1) {
-        showErrorMessage("Please Enter Your Password:");
+        showErrorMessage("Please Enter Your Password");
         return false;
     }
 
@@ -24,12 +24,22 @@ function handleLogin() {
 }
 
 function shake() {
-    var l = 25;
+    var l = 10;
+    var original = -150;
     for( var i = 0; i < 8; i++ ) {
+        var computed;
+        if (i % 2 > 0.51) {
+            computed = original - l;
+        } else {
+            computed = original + l;
+        }
         $('#login-box').animate({
-            'left': "+=" + ( l = -l ) + 'px'
+            'left': computed + 'px'
         }, 100);
     }
+    $('#login-box').animate({
+        'left': '-150px'
+    }, 50);
 }
 
 function showErrorMessage(errorMessage) {
