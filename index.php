@@ -31,6 +31,9 @@ ORM::configure('username', ORM_USERNAME);
 ORM::configure('password', ORM_PASSWORD);
 
 Flight::set('flight.views.path', ROOT_DIR . 'views');
+Flight::route('/', function() {
+    Flight::redirect('/login');
+});
 Flight::route('GET /login', ['\\FUM8\Auth\Front\Index', 'loginAction']);
 Flight::route('POST /login', ['\\FUM8\Auth\Front\Json', 'loginCallbackAction']);
 Flight::route('GET /genuser', function() {
@@ -41,5 +44,21 @@ Flight::route('GET /genuser', function() {
         ->setEmail('andrew@montagne.uk')
         ->setPassword('password')
         ->save();
+});
+Flight::map('error', function(Exception $ex){
+    Flight::render('front/error.html',
+        [
+            'errorTitle' => 'Internal Server Error',
+            'errorMessage' => $ex->getTraceAsString()
+        ]
+    );
+});
+Flight::map('notFound', function(){
+    Flight::render('front/error.html',
+        [
+            'errorTitle' => 'Page Not Found',
+            'errorMessage' => 'No route exists for ' . $_SERVER['REQUEST_URI']
+        ]
+    );
 });
 Flight::start();
