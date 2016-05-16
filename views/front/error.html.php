@@ -16,7 +16,7 @@
 <body>
     <div id="error-box-container">
         <div id="error-box" class="container" role="main">
-            <div id="error-motif" class="progress-bar progress-bar-warning progress-bar-striped"></div>
+            <div id="error-motif"></div>
             <h3 class="bold"><?=$errorTitle?></h3>
             <br/>
             <pre><?=nl2br($errorMessage)?></pre>

@@ -28,4 +28,5 @@ body {
     width: 300px;
     height: 32px;
     margin: 0px 0px 20px -15px;
+    background-image: url('/img/hazard_stripes.png')
 }
