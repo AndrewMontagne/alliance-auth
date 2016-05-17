@@ -20,8 +20,7 @@ class Json
         if ($user != null && $user->verifyPassword($password)) {
             \Flight::json([
                 'success' => 'true',
-                'message' => 'Logged In Successfully!',
-                'redirectUri' => 'http://leagueofgentlemen.org/'
+                'message' => 'Logged In Successfully!'
             ]);
         } else {
             \Flight::json([

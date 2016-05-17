@@ -36,20 +36,14 @@ Flight::route('/', function() {
 });
 Flight::route('GET /login', ['\\FUM8\Auth\Front\Index', 'loginAction']);
 Flight::route('POST /login', ['\\FUM8\Auth\Front\Json', 'loginCallbackAction']);
-Flight::route('GET /genuser', function() {
-    $user = Model::factory('\FUM8\Auth\Model\User')->create();
-    $user
-        ->generateID()
-        ->setUsername('admin')
-        ->setEmail('andrew@montagne.uk')
-        ->setPassword('password')
-        ->save();
-});
+
+Flight::route('GET /authorize', ['\\FUM8\Auth\Front\Index', 'authorizeAction']);
+
 Flight::map('error', function(Exception $ex){
     Flight::render('front/error.html',
         [
             'errorTitle' => 'Internal Server Error',
-            'errorMessage' => $ex->getTraceAsString()
+            'errorMessage' => $ex->getMessage()
         ]
     );
 });

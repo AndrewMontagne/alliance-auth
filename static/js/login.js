@@ -60,7 +60,7 @@ function handleLoginSuccess(data) {
     showSuccessMessage(data.message);
     $('#login-button').prop('disabled', true);
     setTimeout(function() {
-        location.href = data.redirectUri;
+        location.href = window.redirectURI;
     }, 1000);
 }
 
