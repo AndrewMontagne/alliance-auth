@@ -10,5 +10,5 @@ namespace FUM8\Auth\Model;
  */
 class AuthToken extends Base
 {
-    public static $_table = 'tokens';
+    public static $_table = 'characters';
 }
