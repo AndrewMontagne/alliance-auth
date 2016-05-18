@@ -3,7 +3,7 @@
  * Copyright 2016 Andrew O'Rourke
  */
 
-namespace FUM8\Auth\Model;
+namespace Auth\Model;
 
 
 class Base extends \Model

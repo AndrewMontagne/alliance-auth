@@ -3,12 +3,12 @@
  * Copyright 2016 Andrew O'Rourke
  */
 
-namespace FUM8\Auth\Model;
+namespace Auth\Model;
 
 /**
  * User model. Handles password management.
  *
- * @package FUM8\Auth\Model
+ * @package Auth\Model
  */
 class User extends Base
 {
@@ -49,7 +49,7 @@ class User extends Base
      * Sets the password.
      *
      * @param $password
-     * @return \FUM8\Auth\Model\User
+     * @return \Auth\Model\User
      * @throws \Exception
      */
     public function setPassword($password) {

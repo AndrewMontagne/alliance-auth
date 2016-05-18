@@ -3,9 +3,9 @@
  * Copyright 2016 Andrew O'Rourke
  */
 
-namespace FUM8\Auth\Front;
+namespace Auth\Controller;
 
-use FUM8\Auth\Model\User;
+use Auth\Model\User;
 
 class Json
 {
@@ -14,7 +14,7 @@ class Json
         $username = trim(filter_input(INPUT_POST, 'username'));
         $password = trim(filter_input(INPUT_POST, 'password'));
 
-        /* @var \FUM8\Auth\Model\User */
+        /* @var \Auth\Model\User */
         $user = User::factory()->where('username', $username)->find_one();
 
         if ($user != null && $user->verifyPassword($password)) {

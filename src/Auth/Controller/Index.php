@@ -3,9 +3,9 @@
  * Copyright 2016 Andrew O'Rourke
  */
 
-namespace FUM8\Auth\Front;
+namespace Auth\Controller;
 
-use FUM8\Auth\Cookie;
+use Auth\Cookie;
 
 class Index
 {

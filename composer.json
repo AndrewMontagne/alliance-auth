@@ -4,7 +4,7 @@
     "license": "Closed Source",
     "autoload": {
         "psr-4": {
-            "FUM8\\Auth\\": "src/FUM8/Auth/"
+            "Auth\\": "src/Auth/"
         }
     },
     "minimum-stability": "stable",

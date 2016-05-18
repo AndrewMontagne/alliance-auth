@@ -10,7 +10,13 @@ require ROOT_DIR . 'vendor/autoload.php';
 $configPath = ROOT_DIR . $_SERVER['HTTP_HOST'] . '.config.json';
 
 if(!file_exists($configPath)) {
-    echo '<h1>CONFIGURATION ERROR</h1><p>Missing configuration for ' . $_SERVER['HTTP_HOST'] . '</p>';
+    http_response_code(500);
+    Flight::render('front/error.html',
+        [
+            'errorTitle' => 'Configuration Error',
+            'errorMessage' => 'Missing ' . $_SERVER['HTTP_HOST'] . '.config.json'
+        ]
+    );
     die();
 }
 
@@ -34,25 +40,29 @@ Flight::set('flight.views.path', ROOT_DIR . 'views');
 Flight::route('/', function() {
     Flight::redirect('/login');
 });
-Flight::route('GET /login', ['\\FUM8\Auth\Front\Index', 'loginAction']);
-Flight::route('POST /login', ['\\FUM8\Auth\Front\Json', 'loginCallbackAction']);
 
-Flight::route('GET /authorize', ['\\FUM8\Auth\Front\Index', 'authorizeAction']);
+Flight::route('GET /login', ['\Auth\Controller\Index', 'loginAction']);
+Flight::route('POST /login', ['\Auth\Controller\Json', 'loginCallbackAction']);
+Flight::route('GET /authorize', ['\Auth\Controller\Index', 'authorizeAction']);
 
 Flight::map('error', function(Exception $ex){
+    http_response_code(500);
     Flight::render('front/error.html',
         [
             'errorTitle' => 'Internal Server Error',
-            'errorMessage' => $ex->getMessage()
+            'errorMessage' => get_class($ex) . ': ' . $ex->getMessage()
         ]
     );
+    die();
 });
 Flight::map('notFound', function(){
+    http_response_code(404);
     Flight::render('front/error.html',
         [
             'errorTitle' => 'Page Not Found',
             'errorMessage' => 'No route exists for ' . $_SERVER['REQUEST_URI']
         ]
     );
+    die();
 });
 Flight::start();

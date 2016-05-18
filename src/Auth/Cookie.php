@@ -3,7 +3,7 @@
  * Adapted from: http://3ft9.com/snippet-cookie-class-for-php/
  */
 
-namespace FUM8\Auth;
+namespace Auth;
 
 
 class Cookie
