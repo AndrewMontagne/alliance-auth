@@ -19,13 +19,8 @@ class User extends Base
      * @throws \Exception
      */
     private function getPasswordArgs() {
-        if('changeme' == PASSWORD_SALT) {
-            throw new \Exception('NO SALT SET IN CONFIG');
-        }
-
         return [
-            'salt' => PASSWORD_SALT,
-            'cost' => 10
+            'cost' => PASSWORD_ALGO_COST
         ];
     }
 

@@ -62,7 +62,7 @@ class Cookie
      * @param string $domain
      * @return bool
      */
-    static public function set($name, $value, $expiry = self::OneYear, $path = '/', $domain = false)
+    static public function set($name, $value, $expiry = self::ONE_YEAR, $path = '/', $domain = false)
     {
         $retval = false;
         if (!headers_sent())

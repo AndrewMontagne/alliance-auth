@@ -12,8 +12,8 @@
     <script src="<?=getVersionedAsset('js/jquery-1.12.3.min.js');?>"></script>
     <script src="<?=getVersionedAsset('js/bootstrap.min.js');?>"></script>
     <script src="<?=getVersionedAsset('js/login.js');?>"></script>
-    <?php if (isset($_GET['redirect'])) : ?>
-    <script type="text/javascript">window.redirectURI = "<?=base64_decode($_GET['redirect'])?>";</script>
+    <?php if (isset(\Auth\Session::current()->redirectPath)) : ?>
+    <script type="text/javascript">window.redirectURI = "<?=\Auth\Session::current()->redirectPath;?>";</script>
     <?php endif ?>
 </head>
 <body>

@@ -5,7 +5,7 @@
 
 namespace Auth\Controller;
 
-use Auth\Cookie;
+use Auth\Session;
 
 class Index
 {
@@ -17,8 +17,9 @@ class Index
 
     public static function authorizeAction()
     {
-        if(!Cookie::exists('auth')) {
-            \Flight::redirect('/login?redirect=' . base64_encode('/authorize?' . $_SERVER['QUERY_STRING']));
+        if(Session::current()->loggedIn == false) {
+            Session::current()->redirectPath = '/authorize?' . $_SERVER['QUERY_STRING'];
+            \Flight::redirect('/login');
         }
     }
 }
