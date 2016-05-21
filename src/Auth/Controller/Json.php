@@ -6,6 +6,7 @@
 namespace Auth\Controller;
 
 use Auth\Model\User;
+use Auth\Session;
 
 class Json
 {
@@ -18,6 +19,7 @@ class Json
         $user = User::factory()->where('username', $username)->find_one();
 
         if ($user != null && $user->verifyPassword($password)) {
+            $user->loginAs();
             \Flight::json([
                 'success' => 'true',
                 'message' => 'Logged In Successfully!'
@@ -28,20 +30,5 @@ class Json
                 'message' => 'Incorrect Username or Password'
             ], 403);
         }
-    }
-
-    public static function registerCallbackAction()
-    {
-        $username = trim(filter_input(INPUT_POST, 'username'));
-        $password = trim(filter_input(INPUT_POST, 'password'));
-        $email = trim(filter_input(INPUT_POST, 'email'));
-
-        $user = User::factory()->create();
-        $user
-            ->generateID()
-            ->setUsername($username)
-            ->setEmail($email)
-            ->setPassword($password)
-            ->save();
     }
 }

@@ -10,5 +10,5 @@ namespace Auth\Model;
  */
 class Character extends Base
 {
-    public static $_table = 'applications';
+    public static $_table = 'characters';
 }

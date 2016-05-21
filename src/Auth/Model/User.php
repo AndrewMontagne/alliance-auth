@@ -5,6 +5,8 @@
 
 namespace Auth\Model;
 
+use Auth\Session;
+
 /**
  * User model. Handles password management.
  *
@@ -50,5 +52,10 @@ class User extends Base
     public function setPassword($password) {
         $this->hash = password_hash($password, PASSWORD_DEFAULT, $this->getPasswordArgs());
         return $this;
+    }
+
+    public function loginAs()
+    {
+        Session::current()->setUsername($this->getUsername());
     }
 }

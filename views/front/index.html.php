@@ -34,8 +34,8 @@
                         <button id="login-button" type="submit" class="btn btn-primary btn-lg btn-block">AUTHENTICATE</button>
                     </p>
                     <p>
-                        <a href="/register" class="btn btn-default btn-sm bottom left">Register Account</a>
-                        <a href="/recover-password" class="btn btn-default btn-sm bottom right">Reset Password</a>
+                        <a href="/register/" class="btn btn-default btn-sm bottom left">Register Account</a>
+                        <a href="/recover-password/" class="btn btn-default btn-sm bottom right">Reset Password</a>
                     </p>
                 </form>
             </div>

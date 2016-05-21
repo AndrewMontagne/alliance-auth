@@ -5,6 +5,8 @@
 
 namespace Auth;
 
+use Auth\Model\User;
+
 class Session
 {
     private static $instance = null;
@@ -43,13 +45,23 @@ class Session
         return self::$instance;
     }
 
+    public function getLoggedInUser()
+    {
+        return User::factory()->where('username', $this->__get('id'))->find_one();
+    }
+
+    public function clear()
+    {
+        $this->sessionData = new \stdClass();
+    }
+
     public function __call($method, $arguments)
     {
         if(preg_match('/^(s|g)et[A-Z]\w*$/', $method)) {
             $property = lcfirst(substr($method, 3));
             $type = substr($method, 0, 3);
-            $value = $arguments[0];
             if ($type === 'set') {
+                $value = $arguments[0];
                 $this->__set($property, $value);
                 return $this;
             } else if ($type === 'get') {

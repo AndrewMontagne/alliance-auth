@@ -17,6 +17,10 @@ class Base extends \Model
         return \Model::factory(get_called_class());
     }
 
+    public static function getBy($field, $value) {
+        return static::factory()->where($field, $value)->find_one();
+    }
+
     /**
      * Sets this model's ID to a random string.
      *
