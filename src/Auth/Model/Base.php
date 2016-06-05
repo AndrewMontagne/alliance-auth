@@ -13,8 +13,11 @@ class Base extends \Model
      *
      * @return \ORMWrapper
      */
-    public static function factory() {
-        return \Model::factory(get_called_class());
+    public static function factory($class_name = null, $connection_name = null) {
+        if (is_null($class_name)) {
+            $class_name = get_called_class();
+        }
+        return \Model::factory($class_name, $connection_name);
     }
 
     public static function getBy($field, $value) {

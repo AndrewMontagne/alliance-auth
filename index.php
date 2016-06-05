@@ -3,7 +3,7 @@
  * Copyright 2016 Andrew O'Rourke
  */
 
-define('ROOT_DIR', $_SERVER['DOCUMENT_ROOT']);
+define('ROOT_DIR', realpath($_SERVER['DOCUMENT_ROOT']) . '/');
 
 require ROOT_DIR . 'vendor/autoload.php';
 
@@ -22,7 +22,7 @@ if(!file_exists($configPath)) {
     );
     die();
 }
-Flight::map('error', function(Exception $ex){
+Flight::map('error', function(Throwable $ex){
     http_response_code(500);
     Flight::render('front/error.html',
         [

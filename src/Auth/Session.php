@@ -72,7 +72,8 @@ class Session
 
     public function __set($name, $value)
     {
-        return $this->sessionData->$name = $value;
+        $this->sessionData->$name = $value;
+        return $this;
     }
 
     public function __get($name)
