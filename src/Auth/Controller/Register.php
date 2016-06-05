@@ -20,7 +20,7 @@ class Register
     public static function registerAction()
     {
         $characterID = Session::current()->getRegisteredCharacter();
-        $character = Character::getBy('characterID', $characterID);
+        $character = Character::getBy('characterId', $characterID);
 
         if ( ! empty($character->getUserId())) {
             throw new \Exception('Character Already In Use');
@@ -34,9 +34,10 @@ class Register
 
     public static function registerCallbackAction()
     {
+        $session = Session::current();
         $username = trim(filter_input(INPUT_POST, 'username'));
         $password = trim(filter_input(INPUT_POST, 'password'));
-        $characterID = Session::current()->getRegisteredCharacter();
+        $characterID = $session->getRegisteredCharacter();
         $character = Character::getBy('characterID', $characterID);
 
         if (User::factory()->where('username', $username)->find_one() !== false) {

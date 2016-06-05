@@ -34,7 +34,7 @@ class EveSSO
         $character = Character::handleAuthentication($code);
 
         $session = Session::current();
-        $session->setRegisteredCharacter($character->getId());
+        $session->setRegisteredCharacter($character->getCharacterId());
 
         \Flight::redirect($session->redirectPath);
         $session->__unset('redirectPath');
