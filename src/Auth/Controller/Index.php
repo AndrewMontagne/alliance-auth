@@ -9,17 +9,28 @@ use Auth\Session;
 
 class Index
 {
+    /**
+     * Render the login form
+     *
+     * @return void
+     */
     public static function loginAction()
     {
-        $content = 'LEL';
-        \Flight::render('front/index.html', ['body_content' => $content]);
+        \Flight::render('front/index.html');
     }
 
+    /**
+     * OAuth 2 Authorization Endpoint
+     *
+     * @return void
+     */
     public static function authorizeAction()
     {
         if(Session::current()->loggedIn == false) {
             Session::current()->redirectPath = '/authorize?' . $_SERVER['QUERY_STRING'];
             \Flight::redirect('/login');
         }
+
+        //TODO: Implement OAuth 2
     }
 }

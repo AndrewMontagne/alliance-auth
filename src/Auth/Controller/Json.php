@@ -10,8 +10,16 @@ use Auth\Session;
 
 class Json
 {
+    /**
+     * Handles OAuth 2 Login
+     *
+     * @return void
+     */
     public static function loginCallbackAction()
     {
+        //TODO: CSRF TOKEN
+        //TODO: Move into login controller
+
         $username = trim(filter_input(INPUT_POST, 'username'));
         $password = trim(filter_input(INPUT_POST, 'password'));
 

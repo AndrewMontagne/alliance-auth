@@ -8,6 +8,9 @@ namespace Auth;
 
 class Cookie
 {
+    /**
+     * Cookie length constants
+     */
     const SESSION = null;
     const ONE_DAY = 86400;
     const SEVEN_DAYS = 604800;

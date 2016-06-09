@@ -12,6 +12,12 @@ class Character extends Base
 {
     public static $_table = 'characters';
 
+    /**
+     * Handles the EVE SSO authentication, and populates the model thusly
+     *
+     * @param $code
+     * @return mixed
+     */
     static public function handleAuthentication($code)
     {
         $guzzle = new \GuzzleHttp\Client(['base_uri' => 'https://login.eveonline.com']);

@@ -11,6 +11,12 @@ use Auth\Session;
 
 class EveSSO
 {
+    /**
+     * Redirects the user to the EVE SSO OAuth 2 authorisation endpoint
+     *
+     * @return void
+     * @throws \Exception
+     */
     static public function loginAction()
     {
         if (!isset(Session::current()->redirectPath)) {
@@ -26,6 +32,11 @@ class EveSSO
         );
     }
 
+    /**
+     * Handles the OAuth 2 callback from EVE SSO
+     *
+     * @return void
+     */
     static public function callbackAction()
     {
         $code = \Flight::request()->query['code'];

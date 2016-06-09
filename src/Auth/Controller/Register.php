@@ -11,12 +11,23 @@ use Auth\Model\Character;
 
 class Register
 {
+    /**
+     * Redirects clients to OAuth Login
+     *
+     * @return void
+     */
     public static function indexAction()
     {
         Session::current()->setRedirectPath('/register/register');
         \Flight::redirect('/evesso/login');
     }
 
+    /**
+     * Render the registration form
+     *
+     * @return void
+     * @throws \Exception
+     */
     public static function registerAction()
     {
         $characterID = Session::current()->getRegisteredCharacter();
@@ -24,6 +35,7 @@ class Register
 
         if ( ! empty($character->getUserId())) {
             throw new \Exception('Character Already In Use');
+            // TODO: Handle this more gracefully
         }
 
         \Flight::render('front/register.html', [
@@ -32,8 +44,15 @@ class Register
         ]);
     }
 
+    /**
+     * AJAX Endpoint for the registration form
+     *
+     * @return void
+     */
     public static function registerCallbackAction()
     {
+        // TODO: CSRF Token
+
         $session = Session::current();
         $username = trim(filter_input(INPUT_POST, 'username'));
         $password = trim(filter_input(INPUT_POST, 'password'));

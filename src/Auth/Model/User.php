@@ -54,6 +54,11 @@ class User extends Base
         return $this;
     }
 
+    /**
+     * Sets this user as the currently logged in user in the session
+     *
+     * @return void
+     */
     public function loginAs()
     {
         Session::current()->setUsername($this->getUsername());

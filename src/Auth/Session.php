@@ -7,14 +7,39 @@ namespace Auth;
 
 use Auth\Model\User;
 
+/**
+ * Session Class]
+ *
+ * Handles the management of user sessions across the application
+ *
+ * @package Auth
+ * @author Andrew O'Rourke <andrew.orourke@barbon.com>
+ */
 class Session
 {
+    /**
+     * @var Session
+     */
     private static $instance = null;
 
+    /**
+     * @var \Predis\Client
+     */
     private $redis;
+
+    /**
+     * @var string
+     */
     private $sessionID;
+
+    /**
+     * @var stdClass
+     */
     private $sessionData;
 
+    /**
+     * Session constructor.
+     */
     private function __construct()
     {
         $this->redis = new \Predis\Client(REDIS_CONNECTION);
@@ -29,6 +54,9 @@ class Session
         );
     }
 
+    /**
+     * Session destructor
+     */
     public function __destruct()
     {
         $this->redis->set(
@@ -37,6 +65,11 @@ class Session
         );
     }
 
+    /**
+     * Returns the singleton instance
+     *
+     * @return Session
+     */
     public static function current()
     {
         if (is_null(self::$instance)) {
@@ -45,16 +78,33 @@ class Session
         return self::$instance;
     }
 
+    /**
+     * Returns the logged in user
+     *
+     * @return mixed
+     */
     public function getLoggedInUser()
     {
         return User::factory()->where('username', $this->__get('id'))->find_one();
     }
 
+    /**
+     * Clears the session
+     *
+     * @return void
+     */
     public function clear()
     {
         $this->sessionData = new \stdClass();
     }
 
+    /**
+     * Magic Method - Handles getter and setter functions
+     *
+     * @param string $method
+     * @param array $arguments
+     * @return $this|mixed
+     */
     public function __call($method, $arguments)
     {
         if(preg_match('/^(s|g)et[A-Z]\w*$/', $method)) {
@@ -70,12 +120,23 @@ class Session
         }
     }
 
+    /**
+     * Magic Method - Setter
+     *
+     * @param $name
+     * @param $value
+     */
     public function __set($name, $value)
     {
         $this->sessionData->$name = $value;
-        return $this;
     }
 
+    /**
+     * Magic Method - Getter
+     *
+     * @param $name
+     * @return mixed
+     */
     public function __get($name)
     {
         if($this->__isset($name)) {
@@ -84,11 +145,23 @@ class Session
         return null;
     }
 
+    /**
+     * Magic Method - Is Set
+     *
+     * @param $name
+     * @return bool
+     */
     public function __isset($name)
     {
         return isset($this->sessionData->$name);
     }
 
+    /**
+     * Magic Method - Unsetter
+     *
+     * @param $name
+     * @return void
+     */
     public function __unset($name)
     {
         unset($this->sessionData->$name);
