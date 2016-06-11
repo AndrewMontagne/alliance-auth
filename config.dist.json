@@ -1,0 +1,8 @@
+{
+  "ALLIANCE_ID" : "99005866",
+  "ALLIANCE_NAME" : "Alliance Name Here",
+  "PASSWORD_SALT" : "changeme",
+  "ORM_CONNECTION" : "mysql:host=localhost;dbname=auth",
+  "ORM_USERNAME" : "root",
+  "ORM_PASSWORD" : "password"
+}

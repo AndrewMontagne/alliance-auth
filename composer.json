@@ -1,0 +1,17 @@
+{
+    "name": "fum8/alliance-auth",
+    "description": "EVE Alliance Authentication Utility",
+    "license": "Closed Source",
+    "autoload": {
+        "psr-4": {
+            "Auth\\": "src/Auth/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "j4mie/paris": "^1.5",
+        "mikecao/flight": "^1.2",
+        "predis/predis": "^1.0",
+        "guzzlehttp/guzzle": "~6.0"
+    }
+}
