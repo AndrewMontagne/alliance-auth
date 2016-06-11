@@ -23,6 +23,7 @@
             <div class="caption">
                 <h3 id="alliance-name" class="bold"><?=ALLIANCE_NAME?></h3>
                 <form action="/login" onsubmit="return handleLogin(this);">
+                    <input type="hidden" id="csrf_token" value="<?=$csrfToken;?>"/>
                     <div id="login-prompt">Please enter your login credentials:</div>
                     <p>
                         <input id="form-username" type="text" class="form-control" placeholder="Username">

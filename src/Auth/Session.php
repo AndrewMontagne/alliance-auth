@@ -78,6 +78,16 @@ class Session
     }
 
     /**
+     * Generates a CSRF token and sets it in the session.
+     */
+    public function regenCSRFToken()
+    {
+        $token = bin2hex(openssl_random_pseudo_bytes(32));
+        $this->__set('csrf_token', $token);
+        return $token;
+    }
+
+    /**
      * Returns the logged in user.
      *
      * @return mixed

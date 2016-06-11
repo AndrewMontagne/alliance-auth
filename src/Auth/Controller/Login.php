@@ -24,7 +24,9 @@ class Login implements ControllerInterface
      */
     public static function loginAction()
     {
-        \Flight::render('front/index.html');
+        \Flight::render('front/index.html', [
+            'csrfToken' => Session::current()->regenCSRFToken()
+        ]);
     }
 
     /**
@@ -32,10 +34,15 @@ class Login implements ControllerInterface
      */
     public static function loginCallbackAction()
     {
-        //TODO: CSRF TOKEN
-
         $username = trim(filter_input(INPUT_POST, 'username'));
         $password = trim(filter_input(INPUT_POST, 'password'));
+
+        if (Session::current()->csrf_token !== trim(filter_input(INPUT_POST, 'csrf_token'))) {
+            \Flight::json([
+                'success' => 'false',
+                'message' => 'CSRF Failure'
+            ], 400);
+        }
 
         /* @var \Auth\Model\User */
         $user = User::factory()->where('username', $username)->find_one();

@@ -47,6 +47,7 @@ class Register implements ControllerInterface
         \Flight::render('front/register.html', [
             'characterName' => $character->getCharacterName(),
             'suggestedUsername' => str_replace(' ', '', $character->getCharacterName()),
+            'csrfToken' => Session::current()->regenCSRFToken()
         ]);
     }
 
@@ -55,7 +56,12 @@ class Register implements ControllerInterface
      */
     public static function registerCallbackAction()
     {
-        // TODO: CSRF Token
+        if (Session::current()->csrf_token !== trim(filter_input(INPUT_POST, 'csrf_token'))) {
+            \Flight::json([
+                'success' => 'false',
+                'message' => 'CSRF Failure',
+            ], 400);
+        }
 
         $session = Session::current();
         $username = trim(filter_input(INPUT_POST, 'username'));

@@ -1,47 +1,3 @@
-function handleRegister() {
-    var username = $("#form-username").val();
-    var password = $("#form-password").val();
-
-    if(username.length < 1) {
-        showErrorMessage("Please Enter Your Desired Username");
-        return false;
-    }
-    if(password.length < 1) {
-        showErrorMessage("Please Enter Your Desired Password");
-        return false;
-    }
-
-    $.ajax("/register/callback", {
-        "method": "POST",
-        "data": {
-            username,
-            password
-        },
-        "success": handleRegisterSuccess,
-        "error": handleRegisterFailure
-    });
-    return false;
-}
-
-function shake() {
-    var l = 10;
-    var original = -150;
-    for( var i = 0; i < 8; i++ ) {
-        var computed;
-        if (i % 2 > 0.51) {
-            computed = original - l;
-        } else {
-            computed = original + l;
-        }
-        $("#register-box").animate({
-            "left": computed + "px"
-        }, 100);
-    }
-    $("#register-box").animate({
-        "left": "-150px"
-    }, 50);
-}
-
 function showErrorMessage(errorMessage) {
     $("#register-prompt")
         .addClass("error-prompt")
@@ -67,4 +23,50 @@ function handleRegisterSuccess(data) {
 function handleRegisterFailure(data) {
     showErrorMessage(data.responseJSON.message);
     shake();
+}
+
+function handleRegister() {
+    var username = $("#form-username").val();
+    var password = $("#form-password").val();
+    var csrf_token = $("#csrf_token").val();
+
+    if(username.length < 1) {
+        showErrorMessage("Please Enter Your Desired Username");
+        return false;
+    }
+    if(password.length < 1) {
+        showErrorMessage("Please Enter Your Desired Password");
+        return false;
+    }
+
+    $.ajax("/register/callback", {
+        "method": "POST",
+        "data": {
+            username,
+            password,
+            csrf_token
+        },
+        "success": handleRegisterSuccess,
+        "error": handleRegisterFailure
+    });
+    return false;
+}
+
+function shake() {
+    var l = 10;
+    var original = -150;
+    for( var i = 0; i < 8; i++ ) {
+        var computed;
+        if (i % 2 > 0.51) {
+            computed = original - l;
+        } else {
+            computed = original + l;
+        }
+        $("#register-box").animate({
+            "left": computed + "px"
+        }, 100);
+    }
+    $("#register-box").animate({
+        "left": "-150px"
+    }, 50);
 }

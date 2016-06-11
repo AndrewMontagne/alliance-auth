@@ -19,6 +19,7 @@
             <div class="caption">
                 <h3 id="alliance-name" class="bold">Register Account</h3>
                 <form action="/register" onsubmit="return handleRegister(this);">
+                    <input type="hidden" id="csrf_token" value="<?=$csrfToken;?>"/>
                     <div id="register-prompt">Please fill in the form:</div>
                     <p>
                         <label for="form-username">Username:</label>
