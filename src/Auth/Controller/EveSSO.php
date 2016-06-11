@@ -15,8 +15,8 @@ class EveSSO implements ControllerInterface
      */
     public static function registerRoutes()
     {
-        Flight::route('GET /evesso/login', ['\Auth\Controller\EveSSO', 'loginAction']);
-        Flight::route('GET /evesso/callback', ['\Auth\Controller\EveSSO', 'callbackAction']);
+        \Flight::route('GET /evesso/login', ['\Auth\Controller\EveSSO', 'loginAction']);
+        \Flight::route('GET /evesso/callback', ['\Auth\Controller\EveSSO', 'callbackAction']);
     }
 
     /**

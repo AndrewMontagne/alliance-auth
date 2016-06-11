@@ -15,9 +15,9 @@ class Register implements ControllerInterface
      */
     public static function registerRoutes()
     {
-        Flight::route('GET /register/', ['\Auth\Controller\Register', 'indexAction']);
-        Flight::route('POST /register/callback', ['\Auth\Controller\Register', 'registerCallbackAction']);
-        Flight::route('GET /register/register', ['\Auth\Controller\Register', 'registerAction']);
+        \Flight::route('GET /register/', ['\Auth\Controller\Register', 'indexAction']);
+        \Flight::route('POST /register/callback', ['\Auth\Controller\Register', 'registerCallbackAction']);
+        \Flight::route('GET /register/register', ['\Auth\Controller\Register', 'registerAction']);
     }
 
     /**

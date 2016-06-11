@@ -4,6 +4,7 @@
  */
 namespace Auth\Controller;
 
+use Auth\Model\User;
 use Auth\Session;
 
 class Login implements ControllerInterface
@@ -13,9 +14,9 @@ class Login implements ControllerInterface
      */
     public static function registerRoutes()
     {
-        Flight::route('GET /login', ['\Auth\Controller\Login', 'loginAction']);
-        Flight::route('POST /login', ['\Auth\Controller\Login', 'loginCallbackAction']);
-        Flight::route('GET /authorize', ['\Auth\Controller\Login', 'authorizeAction']);
+        \Flight::route('GET /login', ['\Auth\Controller\Login', 'loginAction']);
+        \Flight::route('POST /login', ['\Auth\Controller\Login', 'loginCallbackAction']);
+        \Flight::route('GET /authorize', ['\Auth\Controller\Login', 'authorizeAction']);
     }
 
     /**
@@ -52,7 +53,6 @@ class Login implements ControllerInterface
             ], 403);
         }
     }
-
     /**
      * OAuth 2 Authorization Endpoint.
      */
