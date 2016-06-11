@@ -1,16 +1,13 @@
 <?php
 /**
- * Copyright 2016 Andrew O'Rourke
+ * Copyright 2016 Andrew O'Rourke.
  */
-
 namespace Auth\Model;
 
 use Auth\Session;
 
 /**
  * User model. Handles password management.
- *
- * @package Auth\Model
  */
 class User extends Base
 {
@@ -18,11 +15,13 @@ class User extends Base
 
     /**
      * @return array
+     *
      * @throws \Exception
      */
-    private function getPasswordArgs() {
+    private function getPasswordArgs()
+    {
         return [
-            'cost' => PASSWORD_ALGO_COST
+            'cost' => PASSWORD_ALGO_COST,
         ];
     }
 
@@ -30,15 +29,19 @@ class User extends Base
      * Verifies the password. Updates the hash if needed.
      *
      * @param string $password
+     *
      * @return bool
+     *
      * @throws \Exception
      */
-    public function verifyPassword($password) {
+    public function verifyPassword($password)
+    {
         $matches = password_verify($password, $this->hash);
-        if($matches && password_needs_rehash($this->hash, PASSWORD_DEFAULT, $this->getPasswordArgs())) {
+        if ($matches && password_needs_rehash($this->hash, PASSWORD_DEFAULT, $this->getPasswordArgs())) {
             $this->setPassword($password);
             $this->save();
         }
+
         return $matches;
     }
 
@@ -46,18 +49,20 @@ class User extends Base
      * Sets the password.
      *
      * @param $password
+     *
      * @return \Auth\Model\User
+     *
      * @throws \Exception
      */
-    public function setPassword($password) {
+    public function setPassword($password)
+    {
         $this->hash = password_hash($password, PASSWORD_DEFAULT, $this->getPasswordArgs());
+
         return $this;
     }
 
     /**
-     * Sets this user as the currently logged in user in the session
-     *
-     * @return void
+     * Sets this user as the currently logged in user in the session.
      */
     public function loginAs()
     {
