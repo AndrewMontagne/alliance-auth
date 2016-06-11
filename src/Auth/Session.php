@@ -50,6 +50,10 @@ class Session
         $this->sessionData = json_decode(
             $this->redis->get($this->sessionID)
         );
+
+        if (empty($this->sessionData)) {
+            $this->sessionData = new \stdClass();
+        }
     }
 
     /**
@@ -94,7 +98,10 @@ class Session
      */
     public function getLoggedInUser()
     {
-        return User::factory()->where('username', $this->__get('id'))->find_one();
+        if (is_null($this->__get('username'))) {
+            return null;
+        }
+        return User::factory()->where('username', $this->__get('username'))->find_one();
     }
 
     /**
@@ -153,7 +160,7 @@ class Session
             return $this->sessionData->$name;
         }
 
-        return;
+        return null;
     }
 
     /**

@@ -24,9 +24,17 @@ class Login implements ControllerInterface
      */
     public static function loginAction()
     {
-        \Flight::render('front/index.html', [
-            'csrfToken' => Session::current()->regenCSRFToken()
-        ]);
+        if (!is_null(Session::current()->getLoggedInUser())) {
+            if (isset(Session::current()->redirectPath)) {
+                \Flight::redirect(Session::current()->redirectPath);
+            } else {
+                \Flight::redirect('/');
+            }
+        } else {
+            \Flight::render('front/index.html', [
+                'csrfToken' => Session::current()->regenCSRFToken()
+            ]);
+        }
     }
 
     /**

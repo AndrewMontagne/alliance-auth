@@ -68,4 +68,9 @@ class User extends Base
     {
         Session::current()->setUsername($this->getUsername());
     }
+
+    public function getPrimaryCharacter()
+    {
+        return Character::factory()->where_equal('id', $this->__get('primaryCharacter'))->find_one();
+    }
 }

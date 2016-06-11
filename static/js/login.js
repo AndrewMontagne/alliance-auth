@@ -16,6 +16,9 @@ function handleLoginSuccess(data) {
     showSuccessMessage(data.message);
     $("#login-button").prop("disabled", true);
     setTimeout(function() {
+        if (window.redirectURI === undefined) {
+            window.redirectURI = '/';
+        }
         location.href = window.redirectURI;
     }, 1000);
 }
