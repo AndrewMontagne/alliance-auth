@@ -1,20 +1,27 @@
 <?php
 /**
- * Copyright 2016 Andrew O'Rourke
+ * Copyright 2016 Andrew O'Rourke.
  */
-
 namespace Auth\Controller;
 
 use Auth\Session;
 use Auth\Model\User;
 use Auth\Model\Character;
 
-class Register
+class Register implements ControllerInterface
 {
     /**
-     * Redirects clients to OAuth Login
-     *
-     * @return void
+     * Hooks routes.
+     */
+    public static function registerRoutes()
+    {
+        \Flight::route('GET /register/', ['\Auth\Controller\Register', 'indexAction']);
+        \Flight::route('POST /register/callback', ['\Auth\Controller\Register', 'registerCallbackAction']);
+        \Flight::route('GET /register/register', ['\Auth\Controller\Register', 'registerAction']);
+    }
+
+    /**
+     * Redirects clients to OAuth Login.
      */
     public static function indexAction()
     {
@@ -23,9 +30,8 @@ class Register
     }
 
     /**
-     * Render the registration form
+     * Render the registration form.
      *
-     * @return void
      * @throws \Exception
      */
     public static function registerAction()
@@ -33,21 +39,19 @@ class Register
         $characterID = Session::current()->getRegisteredCharacter();
         $character = Character::getBy('characterId', $characterID);
 
-        if ( ! empty($character->getUserId())) {
+        if (!empty($character->getUserId())) {
             throw new \Exception('Character Already In Use');
             // TODO: Handle this more gracefully
         }
 
         \Flight::render('front/register.html', [
             'characterName' => $character->getCharacterName(),
-            'suggestedUsername' => str_replace(' ', '', $character->getCharacterName())
+            'suggestedUsername' => str_replace(' ', '', $character->getCharacterName()),
         ]);
     }
 
     /**
-     * AJAX Endpoint for the registration form
-     *
-     * @return void
+     * AJAX Endpoint for the registration form.
      */
     public static function registerCallbackAction()
     {
@@ -62,13 +66,13 @@ class Register
         if (User::factory()->where('username', $username)->find_one() !== false) {
             \Flight::json([
                 'success' => 'false',
-                'message' => 'Account Already Exists'
+                'message' => 'Account Already Exists',
             ], 400);
         }
-        if ( ! empty($character->getUserId())) {
+        if (!empty($character->getUserId())) {
             \Flight::json([
                 'success' => 'false',
-                'message' => 'Character Already In Use'
+                'message' => 'Character Already In Use',
             ], 400);
         }
 
@@ -91,7 +95,7 @@ class Register
 
         $data = [
             'success' => true,
-            'message' => 'Account Created'
+            'message' => 'Account Created',
         ];
 
         if (isset($session->oauthRedirectPath)) {
