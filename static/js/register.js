@@ -1,6 +1,6 @@
 function handleRegister() {
-    var username = $('#form-username').val();
-    var password = $('#form-password').val();
+    var username = $("#form-username").val();
+    var password = $("#form-password").val();
 
     if(username.length < 1) {
         showErrorMessage("Please Enter Your Desired Username");
@@ -14,8 +14,8 @@ function handleRegister() {
     $.ajax("/register/callback", {
         "method": "POST",
         "data": {
-            "username" : username,
-            "password" : password
+            username,
+            password
         },
         "success": handleRegisterSuccess,
         "error": handleRegisterFailure
@@ -33,34 +33,34 @@ function shake() {
         } else {
             computed = original + l;
         }
-        $('#register-box').animate({
-            'left': computed + 'px'
+        $("#register-box").animate({
+            "left": computed + "px"
         }, 100);
     }
-    $('#register-box').animate({
-        'left': '-150px'
+    $("#register-box").animate({
+        "left": "-150px"
     }, 50);
 }
 
 function showErrorMessage(errorMessage) {
-    $('#register-prompt')
-        .addClass('error-prompt')
-        .removeClass('success-prompt')
+    $("#register-prompt")
+        .addClass("error-prompt")
+        .removeClass("success-prompt")
         .html(errorMessage);
 }
 
 function showSuccessMessage(message) {
-    $('#register-prompt')
-        .removeClass('error-prompt')
-        .addClass('success-prompt')
+    $("#register-prompt")
+        .removeClass("error-prompt")
+        .addClass("success-prompt")
         .html(message);
 }
 
 function handleRegisterSuccess(data) {
     showSuccessMessage(data.message);
-    $('#register-button').prop('disabled', true);
+    $("#register-button").prop("disabled", true);
     setTimeout(function() {
-        location.href = data.redirect != undefined ? data.redirect : '/';
+        location.href = data.redirect != undefined ? data.redirect : "/";
     }, 1000);
 }
 

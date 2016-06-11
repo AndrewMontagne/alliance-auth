@@ -1,6 +1,6 @@
 function handleLogin() {
-    var username = $('#form-username').val();
-    var password = $('#form-password').val();
+    var username = $("#form-username").val();
+    var password = $("#form-password").val();
 
     if(username.length < 1) {
         showErrorMessage("Please Enter Your Username");
@@ -14,8 +14,8 @@ function handleLogin() {
     $.ajax("/login", {
         "method": "POST",
         "data": {
-            "username" : username,
-            "password" : password
+            username,
+            password
         },
         "success": handleLoginSuccess,
         "error": handleLoginFailure
@@ -33,32 +33,32 @@ function shake() {
         } else {
             computed = original + l;
         }
-        $('#login-box').animate({
-            'left': computed + 'px'
+        $("#login-box").animate({
+            "left": computed + "px"
         }, 100);
     }
-    $('#login-box').animate({
-        'left': '-150px'
+    $("#login-box").animate({
+        "left": "-150px"
     }, 50);
 }
 
 function showErrorMessage(errorMessage) {
-    $('#login-prompt')
-        .addClass('error-prompt')
-        .removeClass('success-prompt')
+    $("#login-prompt")
+        .addClass("error-prompt")
+        .removeClass("success-prompt")
         .html(errorMessage);
 }
 
 function showSuccessMessage(message) {
-    $('#login-prompt')
-        .removeClass('error-prompt')
-        .addClass('success-prompt')
+    $("#login-prompt")
+        .removeClass("error-prompt")
+        .addClass("success-prompt")
         .html(message);
 }
 
 function handleLoginSuccess(data) {
     showSuccessMessage(data.message);
-    $('#login-button').prop('disabled', true);
+    $("#login-button").prop("disabled", true);
     setTimeout(function() {
         location.href = window.redirectURI;
     }, 1000);
