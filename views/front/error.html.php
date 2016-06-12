@@ -19,7 +19,7 @@
             <div id="error-motif"></div>
             <h3 class="bold"><?=$errorTitle?></h3>
             <br/>
-            <pre><?=nl2br($errorMessage)?></pre>
+            <p>Session ID: <?php global $requestId; echo $requestId;?></p>
         </div>
     </div>
 </body>

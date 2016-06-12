@@ -32,7 +32,7 @@ class Base extends \Model
      */
     public function generateID()
     {
-        $this->id = substr(hash('md5', uniqid()), 0, 8);
+        $this->id = bin2hex(random_bytes(8));
 
         return $this;
     }

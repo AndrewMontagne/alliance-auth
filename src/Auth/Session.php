@@ -44,7 +44,7 @@ class Session
 
         $this->sessionID = Cookie::get('s', null);
         if (is_null($this->sessionID)) {
-            $this->sessionID = substr(hash('md5', uniqid()), 0, 8);
+            $this->sessionID = bin2hex(random_bytes(8));
             Cookie::set('s', $this->sessionID);
         }
         $this->sessionData = json_decode(
@@ -86,7 +86,7 @@ class Session
      */
     public function regenCSRFToken()
     {
-        $token = bin2hex(openssl_random_pseudo_bytes(32));
+        $token = bin2hex(random_bytes(32));
         $this->__set('csrf_token', $token);
         return $token;
     }
