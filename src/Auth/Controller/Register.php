@@ -8,16 +8,18 @@ use Auth\Session;
 use Auth\Model\User;
 use Auth\Model\Character;
 
-class Register implements ControllerInterface
+class Register
 {
+    use ControllerTrait;
+
     /**
      * Hooks routes.
      */
     public static function registerRoutes()
     {
-        \Flight::route('GET /register/', ['\Auth\Controller\Register', 'indexAction']);
-        \Flight::route('POST /register/callback', ['\Auth\Controller\Register', 'registerCallbackAction']);
-        \Flight::route('GET /register/register', ['\Auth\Controller\Register', 'registerAction']);
+        \Flight::route('GET /register/', [get_called_class(), 'indexAction']);
+        \Flight::route('POST /register/callback', [get_called_class(), 'registerCallbackAction']);
+        \Flight::route('GET /register/register', [get_called_class(), 'registerAction']);
     }
 
     /**

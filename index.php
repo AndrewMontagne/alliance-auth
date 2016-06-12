@@ -109,5 +109,6 @@ Flight::route('/', function () {
 \Auth\Controller\Login::registerRoutes();
 \Auth\Controller\EveSSO::registerRoutes();
 \Auth\Controller\Register::registerRoutes();
+\Auth\Controller\OAuth::registerRoutes();
 
 Flight::start();

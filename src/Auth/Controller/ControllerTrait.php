@@ -4,10 +4,22 @@
  */
 namespace Auth\Controller;
 
-interface ControllerInterface
+use Auth\Session;
+
+trait ControllerTrait
 {
     /**
      * Hooks routes.
      */
-    public static function registerRoutes();
+    abstract public static function registerRoutes();
+
+    static public function requireLogin()
+    {
+        if (is_null(\Auth\Session::current()->getLoggedInUser())) {
+            Session::current()->setRedirectPath($_SERVER['REQUEST_URI']);
+            \Flight::redirect('/login');
+            return true;
+        }
+        return false;
+    }
 }

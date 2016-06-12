@@ -7,16 +7,17 @@ namespace Auth\Controller;
 use Auth\Model\User;
 use Auth\Session;
 
-class Login implements ControllerInterface
+class Login
 {
+    use ControllerTrait;
+
     /**
      * Hooks routes.
      */
     public static function registerRoutes()
     {
-        \Flight::route('GET /login', ['\Auth\Controller\Login', 'loginAction']);
-        \Flight::route('POST /login', ['\Auth\Controller\Login', 'loginCallbackAction']);
-        \Flight::route('GET /authorize', ['\Auth\Controller\Login', 'authorizeAction']);
+        \Flight::route('GET /login', [get_called_class(), 'loginAction']);
+        \Flight::route('POST /login', [get_called_class(), 'loginCallbackAction']);
     }
 
     /**
@@ -72,17 +73,5 @@ class Login implements ControllerInterface
                 'message' => 'Incorrect Username or Password',
             ], 403);
         }
-    }
-    /**
-     * OAuth 2 Authorization Endpoint.
-     */
-    public static function authorizeAction()
-    {
-        if (Session::current()->loggedIn == false) {
-            Session::current()->redirectPath = '/authorize?'.$_SERVER['QUERY_STRING'];
-            \Flight::redirect('/login');
-        }
-
-        //TODO: Implement OAuth 2
     }
 }

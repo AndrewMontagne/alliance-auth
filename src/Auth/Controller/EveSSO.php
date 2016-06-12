@@ -8,15 +8,17 @@ use Auth\Model\Character;
 use Auth\Model\User;
 use Auth\Session;
 
-class EveSSO implements ControllerInterface
+class EveSSO
 {
+    use ControllerTrait;
+
     /**
      * Hooks routes.
      */
     public static function registerRoutes()
     {
-        \Flight::route('GET /evesso/login', ['\Auth\Controller\EveSSO', 'loginAction']);
-        \Flight::route('GET /evesso/callback', ['\Auth\Controller\EveSSO', 'callbackAction']);
+        \Flight::route('GET /evesso/login', [get_called_class(), 'loginAction']);
+        \Flight::route('GET /evesso/callback', [get_called_class(), 'callbackAction']);
     }
 
     /**
