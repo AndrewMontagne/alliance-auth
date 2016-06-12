@@ -1,8 +1,13 @@
 {
-  "ALLIANCE_ID" : "99005866",
-  "ALLIANCE_NAME" : "Alliance Name Here",
-  "PASSWORD_SALT" : "changeme",
-  "ORM_CONNECTION" : "mysql:host=localhost;dbname=auth",
+  "BASE_URL" : "",
+  "ALLIANCE_ID" : "",
+  "ALLIANCE_NAME" : "",
+  "EVE_SSO_ID" : "",
+  "EVE_SSO_KEY" : "",
+  "PASSWORD_ALGO_COST" : 10,
+  "ORM_CONNECTION" : "mysql:host=localhost;dbname=alliance_auth",
   "ORM_USERNAME" : "root",
-  "ORM_PASSWORD" : "password"
+  "ORM_PASSWORD" : "password",
+  "REDIS_CONNECTION" : "redis://127.0.0.1:6379/",
+  "ALLOW_CHROMELOGGER" : false
 }

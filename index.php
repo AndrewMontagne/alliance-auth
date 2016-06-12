@@ -8,6 +8,21 @@ require ROOT_DIR.'vendor/autoload.php';
 
 $configPath = ROOT_DIR.$_SERVER['HTTP_HOST'].'.config.json';
 
+global $logger;
+global $requestID;
+
+$requestID = substr(hash('md5', uniqid()), 0, 8);
+
+$logger = new \Monolog\Logger('[alliance-auth]');
+$logger->pushProcessor(function($record) {
+    global $requestID;
+    $record['extra']['requestID'] = $requestID;
+    $record['extra']['remoteIP'] = $_SERVER['REMOTE_ADDR'];
+    $record['extra']['session'] = \Auth\Session::current()->allData();
+    return $record;
+});
+$logger->pushHandler(new \Monolog\Handler\RotatingFileHandler(ROOT_DIR . 'app.log', 10, \Monolog\Logger::INFO));
+
 /*
  * Error page handling
  */
@@ -21,17 +36,28 @@ if (!file_exists($configPath)) {
     );
     die();
 }
+
+if (ALLOW_CHROMELOGGER) {
+    $logger->pushHandler(new \Monolog\Handler\ChromePHPHandler(), \Monolog\Logger::DEBUG);
+}
+
 Flight::map('error', function (Throwable $ex) {
+    global $logger;
+    $handler = new \Monolog\ErrorHandler($logger);
+    $handler->handleException($ex);
+
     http_response_code(500);
     Flight::render('front/error.html',
         [
             'errorTitle' => 'Internal Server Error',
-            'errorMessage' => get_class($ex).': '.$ex->getMessage(),
+            'errorMessage' => get_class($ex) . ': ' . $ex->getMessage(),
         ]
     );
     die();
 });
 Flight::map('notFound', function () {
+    global $logger;
+    $logger->debug('Request made to missing route "' . $_SERVER['REQUEST_URI'] .'"');
     http_response_code(404);
     Flight::render('front/error.html',
         [

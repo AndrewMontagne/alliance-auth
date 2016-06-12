@@ -45,23 +45,28 @@ class Login implements ControllerInterface
         $username = trim(filter_input(INPUT_POST, 'username'));
         $password = trim(filter_input(INPUT_POST, 'password'));
 
+        global $logger;
+
         if (Session::current()->csrf_token !== trim(filter_input(INPUT_POST, 'csrf_token'))) {
             \Flight::json([
                 'success' => 'false',
                 'message' => 'CSRF Failure'
             ], 400);
+            $logger->info('CSRF failure for user ' . $username);
         }
 
         /* @var \Auth\Model\User */
         $user = User::factory()->where('username', $username)->find_one();
 
         if ($user != null && $user->verifyPassword($password)) {
+            $logger->info($username . ' logged in.');
             $user->loginAs();
             \Flight::json([
                 'success' => 'true',
                 'message' => 'Logged In Successfully!',
             ]);
         } else {
+            $logger->info('Authentication failure for ' . $username);
             \Flight::json([
                 'success' => 'false',
                 'message' => 'Incorrect Username or Password',

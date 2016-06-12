@@ -95,6 +95,9 @@ class Register implements ControllerInterface
         $character->setUserId($user->getId());
         $character->save();
 
+        global $logger;
+        $logger->notice('Account "' . $username . '" created.');
+
         $session = Session::current();
         unset($session->registeredCharacter);
         unset($session->redirectPath);

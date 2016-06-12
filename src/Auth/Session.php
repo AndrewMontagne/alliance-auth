@@ -113,6 +113,16 @@ class Session
     }
 
     /**
+     * Returns all session data
+     *
+     * @return \stdClass
+     */
+    public function allData()
+    {
+        return $this->sessionData;
+    }
+
+    /**
      * Magic Method - Handles getter and setter functions.
      *
      * @param string $method
