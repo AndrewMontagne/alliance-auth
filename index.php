@@ -11,7 +11,7 @@ $configPath = ROOT_DIR.$_SERVER['HTTP_HOST'].'.config.json';
 global $logger;
 global $requestID;
 
-$requestID = substr(hash('md5', uniqid()), 0, 8);
+$requestID = bin2hex(random_bytes(8));
 
 $logger = new \Monolog\Logger('[alliance-auth]');
 $logger->pushProcessor(function($record) {
@@ -43,14 +43,13 @@ if (ALLOW_CHROMELOGGER) {
 
 Flight::map('error', function (Throwable $ex) {
     global $logger;
-    $handler = new \Monolog\ErrorHandler($logger);
-    $handler->handleException($ex);
+    $logger->error('Uncaught ' . get_class($ex) . ' in ' . $ex->getFile() . ' line ' . $ex->getLine(), $ex->getTrace());
 
     http_response_code(500);
     Flight::render('front/error.html',
         [
             'errorTitle' => 'Internal Server Error',
-            'errorMessage' => get_class($ex) . ': ' . $ex->getMessage(),
+            'errorMessage' => $ex->getMessage(),
         ]
     );
     die();

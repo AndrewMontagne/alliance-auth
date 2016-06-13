@@ -18,8 +18,10 @@
         <div id="error-box" class="container" role="main">
             <div id="error-motif"></div>
             <h3 class="bold"><?=$errorTitle?></h3>
-            <br/>
-            <p>Session ID: <?php global $requestId; echo $requestId;?></p>
+            <p style="font-family: monospace; margin-top: 20px">
+                <b><?=$errorMessage;?></b><br/>
+                Request ID: <?php global $requestID; echo $requestID;?>
+            </p>
         </div>
     </div>
 </body>
