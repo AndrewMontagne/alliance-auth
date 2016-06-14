@@ -1,12 +1,12 @@
 function showErrorMessage(errorMessage) {
-    $("#login-prompt")
+    $("#authorize-prompt")
         .addClass("error-prompt")
         .removeClass("success-prompt")
         .html(errorMessage);
 }
 
 function showSuccessMessage(message) {
-    $("#login-prompt")
+    $("#authorize-prompt")
         .removeClass("error-prompt")
         .addClass("success-prompt")
         .html(message);
@@ -31,6 +31,34 @@ function shake() {
     }, 50);
 }
 
+function handleAuthSuccess(data) {
+    showSuccessMessage(data.message);
+    $("#login-button").prop("disabled", true);
+    setTimeout(function() {
+        location.href = data.redirectUri;
+    }, 1000);
+}
+
+function handleAuthFailure(data) {
+    showErrorMessage(data.responseJSON.message);
+    shake();
+}
+
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
+
+function handleGrantAuthorization() {
+    var csrf_token = $("#csrf_token").val();
+    var client_id = $("#client_id").val();
+
+    $.ajax("/oauth/authorize", {
+        "method": "POST",
+        "data": {
+            client_id,
+            csrf_token
+        },
+        "success": handleAuthSuccess,
+        "error": handleAuthFailure
+    });
+}

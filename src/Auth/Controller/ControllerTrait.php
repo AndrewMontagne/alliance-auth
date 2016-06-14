@@ -22,4 +22,12 @@ trait ControllerTrait
         }
         return false;
     }
+
+    static private function input($var, $method = INPUT_POST) {
+        $value = trim(filter_input($method, $var));
+        if (empty($value)) {
+            throw new \Exception('Missing var ' . $var);
+        }
+        return $value;
+    }
 }

@@ -43,7 +43,7 @@ if (ALLOW_CHROMELOGGER) {
 
 Flight::map('error', function (Throwable $ex) {
     global $logger;
-    $logger->error('Uncaught ' . get_class($ex) . ' in ' . $ex->getFile() . ' line ' . $ex->getLine(), $ex->getTrace());
+    $logger->error('Uncaught ' . get_class($ex) . ': "' . $ex->getMessage() .'"" in ' . $ex->getFile() . ' line ' . $ex->getLine(), $ex->getTrace());
 
     http_response_code(500);
     Flight::render('front/error.html',

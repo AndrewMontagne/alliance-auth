@@ -8,5 +8,5 @@ namespace Auth\Model;
  */
 class AuthToken extends Base
 {
-    public static $_table = 'characters';
+    public static $_table = 'tokens';
 }

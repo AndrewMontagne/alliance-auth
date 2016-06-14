@@ -22,6 +22,7 @@
             <div class="caption">
                 <h3 id="alliance-name" class="bold">Authorize Application</h3>
                 <input type="hidden" id="csrf_token" value="<?=$csrfToken;?>"/>
+                <input type="hidden" id="client_id" value="<?=$clientId;?>"/>
                 <div id="authorize-prompt">
                     "<b><?=$application->getRemarks();?>"</b>
                     <?php if ($application->getIsOfficial()): ?>
