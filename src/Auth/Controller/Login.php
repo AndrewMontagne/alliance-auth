@@ -32,7 +32,7 @@ class Login
                 \Flight::redirect('/');
             }
         } else {
-            \Flight::render('front/index.html', [
+            \Flight::render('front/login.html', [
                 'csrfToken' => Session::current()->regenCSRFToken()
             ]);
         }
