@@ -67,6 +67,7 @@ class OAuth
             ->generateID()
             ->setAuthToken(bin2hex(random_bytes(16)))
             ->setApplicationId($application->getId())
+            ->setUserId($user->getId())
             ->setExpires(date('Y-m-d h:i:s', time() + 60));
         $token->save();
 
