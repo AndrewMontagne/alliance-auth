@@ -1,7 +1,7 @@
 {
     "name": "fum8/alliance-auth",
     "description": "EVE Alliance Authentication Utility",
-    "license": "Closed Source",
+    "license": "BSD 3-Clause Licence",
     "autoload": {
         "psr-4": {
             "Auth\\": "src/Auth/"
