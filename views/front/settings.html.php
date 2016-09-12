@@ -20,20 +20,19 @@
 <body>
     <div id="box-container">
         <div id="box" class="container" role="main">
-            <br/>
+            <h3>Alliance Authentication Portal</h3>
             <ul class="nav nav-tabs">
                 <li role="presentation" class="active"><a href="#">Characters</a></li>
-                <li role="presentation"><a href="#">Authorizations</a></li>
-                <li role="presentation"><a href="#">Preferences</a></li>
+                <li role="presentation"><a href="#">Groups</a></li>
+                <li role="presentation"><a href="#">Apps</a></li>
+                <li role="presentation"><a href="#">Settings</a></li>
             </ul>
-            <br/>
-            <div class="bs-example" data-example-id="thumbnails-with-custom-content">
-                <div class="table-container">
-                    <table class="table">
+            <div class="tab-content">
+                <div class="table-container ">
+                    <table class="table table-striped table-hover">
                         <thead>
                         <tr>
-                            <th style="width: 32px"></th>
-                            <th>Name</th>
+                            <th colspan="2">Name</th>
                             <th>Corporation</th>
                             <th>Alliance</th>
                             <th>Tools</th>
@@ -42,7 +41,7 @@
                         <tbody>
                         <?php foreach($characters as $character): $isPrimaryCharacter = $character->getCharacterId() === $primaryCharacterId; ?>
                             <tr>
-                            <td>
+                            <td style="width: 32px">
                                 <img class="table-portrait" src="http://image.eveonline.com/Character/<?=$character->getCharacterId();?>_32.jpg">
                             </td>
                             <td>
@@ -64,13 +63,22 @@
                         </tbody>
                     </table>
                 </div>
-                <div style="padding: 8px">
-                    <span class="btn btn-primary btn-sm" disabled data-toggle="tooltip" data-placement="top" title="Add A Character To Continue">
-                        Continue to <b><?="Application"?></b>
-                    </span>
-                    <span class="btn btn-default btn-sm">
-                        <span class="glyphicon glyphicon-plus"></span> Add Character
-                    </span>
+            </div>
+            <div style="padding: 16px" class="row">
+                <div class="col-xs-4" style="text-align: left !important; padding: 0px">
+                        <span class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-plus"></span> Add Character
+                        </span>
+                </div>
+                <div class="col-xs-4" style="padding: 0px">
+                        <span class="btn btn-primary btn-sm" disabled data-toggle="tooltip" data-placement="top" title="Add A Character To Continue">
+                            Continue to <b><?="Application"?></b>
+                        </span>
+                </div>
+                <div class="col-xs-4" style="text-align: right !important; padding: 0px">
+                        <span class="btn btn-default btn-sm" onclick="location.href = '/logout';">
+                            <span class="glyphicon glyphicon-log-out"></span> Log Out
+                        </span>
                 </div>
             </div>
         </div>
