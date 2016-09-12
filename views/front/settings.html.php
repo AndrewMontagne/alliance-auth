@@ -29,7 +29,7 @@
             </ul>
             <div class="tab-content">
                 <div class="table-container ">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover" style="margin: 0px;">
                         <thead>
                         <tr>
                             <th colspan="2">Name</th>
@@ -39,27 +39,30 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach($characters as $character): $isPrimaryCharacter = $character->getCharacterId() === $primaryCharacterId; ?>
+                        <?php if(!is_array($characters) || count($characters) < 1): ?>
+                            <tr><td colspan="5"><i>No Characters On File</i></td></tr>
+                        <?php else: foreach($characters as $character): $isPrimaryCharacter = $character->getCharacterId() === $primaryCharacterId;?>
                             <tr>
                             <td style="width: 32px">
                                 <img class="table-portrait" src="http://image.eveonline.com/Character/<?=$character->getCharacterId();?>_32.jpg">
                             </td>
                             <td>
-                                <?php if($isPrimaryCharacter): ?>
-                                    <span data-toggle="tooltip" data-placement="top" title="Primary Character" class="glyphicon glyphicon-star"></span>&nbsp;
-                                <?php endif; ?>
-                                <?=$character->getCharacterName();?>
+                                <?php if($isPrimaryCharacter) { ?>
+                                    <b><?=$character->getCharacterName();?></b>
+                                <?php } else { ?>
+                                    <?=$character->getCharacterName();?>
+                                <?php } ?>
                             </td>
                             <td>-</td>
                             <td>-</td>
                             <td>
                                 <?php if(!$isPrimaryCharacter): ?>
-                                <span data-toggle="tooltip" data-placement="top" title="Make Primary" class="glyphicon glyphicon-star-empty clickable" onclick="alert('lel')"></span>&nbsp;
+                                    <span data-toggle="tooltip" data-placement="top" title="Make Primary" class="glyphicon glyphicon-star-empty clickable" onclick="alert('lel')"></span>&nbsp;
+                                    <span data-toggle="tooltip" data-placement="top" title="Remove" class="glyphicon glyphicon-remove clickable" onclick="alert('lel')"></span>&nbsp;
                                 <?php endif; ?>
-                                <span data-toggle="tooltip" data-placement="top" title="Refresh Auth" class="glyphicon glyphicon-refresh clickable" onclick="alert('lel')"></span>&nbsp;
-                                <span data-toggle="tooltip" data-placement="top" title="Remove" class="glyphicon glyphicon-remove clickable" onclick="alert('lel')"></span>
+                                <span data-toggle="tooltip" data-placement="top" title="Refresh Auth" class="glyphicon glyphicon-refresh clickable" onclick="alert('lel')"></span>
                             </td>
-                        </tr><?php endforeach; ?>
+                        </tr><?php endforeach; endif;?>
                         </tbody>
                     </table>
                 </div>
