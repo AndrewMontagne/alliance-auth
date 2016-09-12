@@ -96,15 +96,7 @@ function getVersionedAsset($asset)
 /*
  * Request Routing
  */
-Flight::route('/', function () {
-    if (is_null(\Auth\Session::current()->getLoggedInUser())) {
-        Flight::redirect('/login');
-        return;
-    }
-    $char = \Auth\Session::current()->getLoggedInUser()->getPrimaryCharacter();
-    echo '<h1>' . $char->getCharacterName() . '</h1><img src="http://image.eveonline.com/Character/' . $char->getCharacterId() . '_256.jpg">';
-});
-
+\Auth\Controller\Settings::registerRoutes();
 \Auth\Controller\Login::registerRoutes();
 \Auth\Controller\EveSSO::registerRoutes();
 \Auth\Controller\Register::registerRoutes();

@@ -94,7 +94,7 @@ class Session
     /**
      * Returns the logged in user.
      *
-     * @return mixed
+     * @return User
      */
     public function getLoggedInUser()
     {

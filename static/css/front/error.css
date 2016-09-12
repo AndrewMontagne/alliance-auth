@@ -1,5 +1,6 @@
 body {
     background: url('/img/background_error.jpg') no-repeat center center fixed;
+    background-size: cover;
 }
 .bold {
     font-weight: bold;

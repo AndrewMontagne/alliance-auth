@@ -17,6 +17,7 @@ class Login
     public static function registerRoutes()
     {
         \Flight::route('GET /login', [get_called_class(), 'loginAction']);
+        \Flight::route('GET /logout', [get_called_class(), 'logoutAction']);
         \Flight::route('POST /login', [get_called_class(), 'loginCallbackAction']);
     }
 
@@ -36,6 +37,12 @@ class Login
                 'csrfToken' => Session::current()->regenCSRFToken()
             ]);
         }
+    }
+
+    public static function logoutAction()
+    {
+        Session::current()->clear();
+        \Flight::redirect('/');
     }
 
     /**
