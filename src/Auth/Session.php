@@ -43,10 +43,7 @@ class Session
         $this->redis = new \Predis\Client(REDIS_CONNECTION);
 
         $this->sessionID = Cookie::get('s', null);
-        if (is_null($this->sessionID)) {
-            $this->sessionID = bin2hex(random_bytes(8));
-            Cookie::set('s', $this->sessionID);
-        }
+
         $this->sessionData = json_decode(
             $this->redis->get($this->sessionID)
         );
@@ -54,6 +51,13 @@ class Session
         if (empty($this->sessionData)) {
             $this->sessionData = new \stdClass();
         }
+
+        $newSessionID = $this->generateSessionID();
+        if (is_null($this->sessionID)) {
+            $this->redis->rename($this->sessionID, $newSessionID);
+        }
+        $this->sessionID = $newSessionID;
+        Cookie::set('s', $this->sessionID);
     }
 
     /**
@@ -64,6 +68,10 @@ class Session
         $this->redis->set(
             $this->sessionID,
             json_encode($this->sessionData)
+        );
+        $this->redis->expire(
+            $this->sessionID,
+            60 * 60 * 24 * 7
         );
     }
 
@@ -79,6 +87,11 @@ class Session
         }
 
         return self::$instance;
+    }
+
+    private function generateSessionID()
+    {
+        return bin2hex(random_bytes(8));
     }
 
     /**

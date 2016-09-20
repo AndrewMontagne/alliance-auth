@@ -17,7 +17,7 @@ class EveSSO
      */
     public static function registerRoutes()
     {
-        \Flight::route('GET /evesso/login', [get_called_class(), 'loginAction']);
+        \Flight::route('GET /evesso/auth', [get_called_class(), 'loginAction']);
         \Flight::route('GET /evesso/callback', [get_called_class(), 'callbackAction']);
     }
 
@@ -28,11 +28,7 @@ class EveSSO
      */
     public static function loginAction()
     {
-        if (!isset(Session::current()->redirectPath)) {
-            throw new \Exception('No redirect path specified.');
-        }
-
-        \Flight::redirect(
+         \Flight::redirect(
             'https://login.eveonline.com/oauth/authorize?response_type=code&client_id='.EVE_SSO_ID.
             '&redirect_uri='.BASE_URL.'evesso/callback&scope='.implode(' ', [
                 'characterSkillsRead',
@@ -46,15 +42,13 @@ class EveSSO
      */
     public static function callbackAction()
     {
+        self::requireLogin();
+
         $code = \Flight::request()->query['code'];
         $state = \Flight::request()->query['state'];
 
-        $character = Character::handleAuthentication($code);
+        Character::handleAuthentication($code);
 
-        $session = Session::current();
-        $session->setRegisteredCharacter($character->getCharacterId());
-
-        \Flight::redirect($session->redirectPath);
-        $session->__unset('redirectPath');
+        \Flight::redirect('/characters');
     }
 }

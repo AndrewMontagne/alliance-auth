@@ -21,7 +21,7 @@
         <div id="login-box" class="container" role="main">
             <img id="alliance-logo" src="https://image.eveonline.com/Alliance/<?=ALLIANCE_ID?>_128.png">
             <div class="caption">
-                <h3 id="alliance-name" class="bold"><?=ALLIANCE_NAME?></h3>
+                <h3 id="alliance-name"><?=ALLIANCE_NAME?></h3>
                 <form action="/login" onsubmit="return handleLogin(this);">
                     <input type="hidden" id="csrf_token" value="<?=$csrfToken;?>"/>
                     <div id="login-prompt">Please enter your login credentials:</div>

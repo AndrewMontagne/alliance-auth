@@ -17,7 +17,10 @@ class Settings
      */
     public static function registerRoutes()
     {
-        \Flight::route('GET /', [get_called_class(), 'indexAction']);
+        \Flight::route('GET /characters', [get_called_class(), 'indexAction']);
+        \Flight::route('GET /', function() {
+            \Flight::redirect('/characters');
+        });
     }
 
     /**
@@ -28,13 +31,17 @@ class Settings
         static::requireLogin();
 
         $user = \Auth\Session::current()->getLoggedInUser();
-        $primaryCharacterId = $user->getPrimaryCharacter()->getCharacterId();
-        $characters = Character::factory()->where_equal('userId', $user->getId())->find_many();
+        $primaryCharacter = $user->getPrimaryCharacter();
+
+        $characters = Character::factory()
+            ->where_equal('userId', $user->getId())
+            ->order_by_asc('characterName')
+            ->find_many();
 
         \Flight::render('front/settings.html', [
             'csrfToken' => Session::current()->regenCSRFToken(),
             'characters' => $characters,
-            'primaryCharacterId' => $primaryCharacterId
+            'primaryCharacterId' => ($primaryCharacter === false ? null : $primaryCharacter->getCharacterId())
         ]);
     }
 }

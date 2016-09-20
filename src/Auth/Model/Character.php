@@ -4,6 +4,8 @@
  */
 namespace Auth\Model;
 
+use Auth\Session;
+
 /**
  */
 class Character extends Base
@@ -19,6 +21,9 @@ class Character extends Base
      */
     public static function handleAuthentication($code)
     {
+        $session = Session::current();
+        $user = $session->getLoggedInUser();
+
         $guzzle = new \GuzzleHttp\Client(['base_uri' => 'https://login.eveonline.com']);
         $response = $guzzle->post('/oauth/token',
             ['form_params' => [
@@ -28,7 +33,6 @@ class Character extends Base
                 'auth' => [EVE_SSO_ID, EVE_SSO_KEY],
             ]);
         $responseData = json_decode($response->getBody());
-        var_dump($responseData);
 
         $accessToken = $responseData->access_token;
         $refreshToken = $responseData->refresh_token;
@@ -36,8 +40,8 @@ class Character extends Base
         $response = $guzzle->get('/oauth/verify', [
             'headers' => ['Authorization' => 'Bearer '.$accessToken],
         ]);
+
         $responseData = json_decode($response->getBody());
-        var_dump($responseData);
 
         $characterId = $responseData->CharacterID;
         $characterName = $responseData->CharacterName;
@@ -48,6 +52,8 @@ class Character extends Base
         if ($character === false) {
             $character = self::factory()->create();
             $character->generateID();
+        } else if ($character->getUserId() != $user->getId()) {
+            throw new \Exception('Character is already assigned to another user!');
         }
 
         $character
@@ -57,7 +63,14 @@ class Character extends Base
             ->setOwnerHash($ownerHash)
             ->setAccessToken($accessToken)
             ->setRefreshToken($refreshToken)
+            ->setUserId($user->getId())
             ->save();
+
+        //Set as the primary character if the user has none
+        if ($user->getPrimaryCharacter() === false) {
+            $user->setPrimaryCharacter($character);
+            $user->save();
+        }
 
         return $character;
     }

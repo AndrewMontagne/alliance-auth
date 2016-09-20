@@ -23,15 +23,15 @@
                     <div id="register-prompt">Please fill in the form:</div>
                     <p>
                         <label for="form-username">Username:</label>
-                        <input id="form-username" type="text" class="form-control" placeholder="Desired Username" value="<?=$suggestedUsername?>">
+                        <input id="form-username" type="text" class="form-control" placeholder="Desired Username">
                     </p>
                     <p>
                         <label for="form-password">Password:</label>
                         <input id="form-password" type="password" class="form-control" placeholder="Desired Password">
                     </p>
                     <p>
-                        <label for="form-eve-character">Primary Character:</label>
-                        <input id="form-eve-character" type="text" class="form-control" value="<?=$characterName?>" readonly>
+                        <label for="form-password">Confirm:</label>
+                        <input id="form-confirm" type="password" class="form-control" placeholder="Confirm Password">
                     </p>
                     <p>
                         <button id="register-button" type="submit" class="btn btn-primary btn-lg btn-block">COMPLETE REGISTRATION</button>

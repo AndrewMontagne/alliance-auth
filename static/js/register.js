@@ -28,6 +28,7 @@ function handleRegisterFailure(data) {
 function handleRegister() {
     var username = $("#form-username").val();
     var password = $("#form-password").val();
+    var confirm = $("#form-confirm").val();
     var csrf_token = $("#csrf_token").val();
 
     if(username.length < 1) {
@@ -36,6 +37,10 @@ function handleRegister() {
     }
     if(password.length < 1) {
         showErrorMessage("Please Enter Your Desired Password");
+        return false;
+    }
+    if(password !== confirm) {
+        showErrorMessage("Your Password Does Not Match");
         return false;
     }
 

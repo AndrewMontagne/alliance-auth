@@ -19,16 +19,6 @@ class Register
     {
         \Flight::route('GET /register/', [get_called_class(), 'indexAction']);
         \Flight::route('POST /register/callback', [get_called_class(), 'registerCallbackAction']);
-        \Flight::route('GET /register/register', [get_called_class(), 'registerAction']);
-    }
-
-    /**
-     * Redirects clients to OAuth Login.
-     */
-    public static function indexAction()
-    {
-        Session::current()->setRedirectPath('/register/register');
-        \Flight::redirect('/evesso/login');
     }
 
     /**
@@ -36,19 +26,9 @@ class Register
      *
      * @throws \Exception
      */
-    public static function registerAction()
+    public static function indexAction()
     {
-        $characterID = Session::current()->getRegisteredCharacter();
-        $character = Character::getBy('characterId', $characterID);
-
-        if (!empty($character->getUserId())) {
-            throw new \Exception('Character Already In Use');
-            // TODO: Handle this more gracefully
-        }
-
         \Flight::render('front/register.html', [
-            'characterName' => $character->getCharacterName(),
-            'suggestedUsername' => str_replace(' ', '', $character->getCharacterName()),
             'csrfToken' => Session::current()->regenCSRFToken()
         ]);
     }
@@ -68,8 +48,6 @@ class Register
         $session = Session::current();
         $username = trim(filter_input(INPUT_POST, 'username'));
         $password = trim(filter_input(INPUT_POST, 'password'));
-        $characterID = $session->getRegisteredCharacter();
-        $character = Character::getBy('characterID', $characterID);
 
         if (User::factory()->where('username', $username)->find_one() !== false) {
             \Flight::json([
@@ -77,25 +55,15 @@ class Register
                 'message' => 'Account Already Exists',
             ], 400);
         }
-        if (!empty($character->getUserId())) {
-            \Flight::json([
-                'success' => 'false',
-                'message' => 'Character Already In Use',
-            ], 400);
-        }
 
         $user = User::factory()
             ->create()
             ->generateID()
             ->setUsername($username)
-            ->setPassword($password)
-            ->setPrimaryCharacter($character->getId());
+            ->setPassword($password);
 
         $user->save();
         $user->loginAs();
-
-        $character->setUserId($user->getId());
-        $character->save();
 
         global $logger;
         $logger->notice('Account "' . $username . '" created.');
