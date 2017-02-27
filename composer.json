@@ -4,7 +4,12 @@
     "license": "BSD 3-Clause Licence",
     "autoload": {
         "psr-4": {
-            "Auth\\": "src/Auth/"
+            "Auth\\": "src/main/php/Auth/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "src/test/php/Test/"
         }
     },
     "minimum-stability": "stable",

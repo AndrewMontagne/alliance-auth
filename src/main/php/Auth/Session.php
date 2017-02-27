@@ -7,11 +7,11 @@ namespace Auth;
 use Auth\Model\User;
 
 /**
- * Session Class].
+ * Session Class.
  *
  * Handles the management of user sessions across the application
  *
- * @author Andrew O'Rourke <andrew.orourke@barbon.com>
+ * @author Andrew O'Rourke <andrew@montagne.uk>
  */
 class Session
 {
@@ -53,9 +53,9 @@ class Session
         }
 
         $newSessionID = $this->generateSessionID();
-        if (is_null($this->sessionID)) {
+        /*if (is_null($this->sessionID)) {
             $this->redis->rename($this->sessionID, $newSessionID);
-        }
+        }(*/
         $this->sessionID = $newSessionID;
         Cookie::set('s', $this->sessionID);
     }

@@ -1,0 +1,14 @@
+{
+    "alias": "composer.phar",
+    "chmod": "0755",
+    "directories": ["src/main", "vendor"],
+    "files": [
+        "LICENSE.md",
+        "index.php",
+        "stub.php"
+    ],
+    "git-version": "package_version",
+    "output": "build/alliance-auth.phar",
+    "main" : "stub.php",
+    "stub" : true
+}

@@ -21,7 +21,7 @@ $logger->pushProcessor(function($record) {
     $record['extra']['session'] = \Auth\Session::current()->allData();
     return $record;
 });
-$logger->pushHandler(new \Monolog\Handler\RotatingFileHandler(ROOT_DIR . 'app.log', 10, \Monolog\Logger::INFO));
+$logger->pushHandler(new \Monolog\Handler\RotatingFileHandler(ROOT_DIR . '\logs\app.log', 10, \Monolog\Logger::INFO));
 
 /*
  * Error page handling
@@ -35,6 +35,12 @@ if (!file_exists($configPath)) {
         ]
     );
     die();
+} else {
+    $config = json_decode(file_get_contents($configPath), true);
+
+    foreach ($config as $key => $value) {
+        define(strtoupper($key), $value);
+    }
 }
 
 if (ALLOW_CHROMELOGGER) {
@@ -67,14 +73,6 @@ Flight::map('notFound', function () {
     die();
 });
 
-/*
- * Configuration Loading
- */
-$config = json_decode(file_get_contents($configPath), true);
-
-foreach ($config as $key => $value) {
-    define(strtoupper($key), $value);
-}
 
 ORM::configure(ORM_CONNECTION);
 ORM::configure('username', ORM_USERNAME);
